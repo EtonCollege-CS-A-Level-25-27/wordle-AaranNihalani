@@ -17,6 +17,13 @@ struct Solution {
     ///   - return: [true, false, true, false, true]
     func exactMatches(guess: [Character], answer: [Character]) -> [Bool] {
         // TODO: Compare each letter in guess to the same index in answer
+        var vals = [false, false, false, false ,false]
+        for i in 0...guess.count - 1 {
+            if guess[i] == answer[i] {
+                vals[i] = true
+            }
+        }
+        return vals
     }
 
     /// 2️⃣ Return an array of Bools where each value is `true`
@@ -30,6 +37,13 @@ struct Solution {
     ///   - return: [false, true, true, false, false]
     func partialMatches(guess: [Character], answer: [Character]) -> [Bool] {
         // TODO: Use indexing and contains to check for wrong-position matches
+        var vals = [false, false, false, false ,false]
+        for i in 0...guess.count - 1 {
+            if answer.contains(guess[i]) {
+                vals[i] = true
+            }
+        }
+        return vals
     }
 
     /// 3️⃣ Return an array of emoji strings (["✅", "⚠️", "🛑"]) that show
@@ -39,6 +53,19 @@ struct Solution {
     /// - 🛑 if the letter is not in the word at all
     func generateFeedback(guess: [Character], answer: [Character]) -> [String] {
         // TODO: Use exactMatches and partialMatches to build feedback array
+        var vals = ["", "", "", "", ""]
+        let exacts = exactMatches(guess: guess, answer: answer)
+        let partials = partialMatches(guess: guess, answer: answer)
+        for i in 0...guess.count - 1 {
+            if exacts[i] {
+                vals[i] = "✅"
+            } else if partials[i] {
+                vals[i] = "⚠️"
+            } else {
+                vals[i] = "🛑"
+            }
+        }
+        return vals
     }
 
     /// 4️⃣ Convert an array of emoji strings into a single display string
@@ -48,6 +75,7 @@ struct Solution {
     ///   - return: "✅ ⚠️ 🛑"
     func arrayToDisplayString(_ arr: [String]) -> String {
         // TODO: Use .joined(separator:) to turn the array into a display line
+        return arr.joined(separator: "")
     }
 
     /// 5️⃣ Return true if ALL characters in the guess match the answer exactly
@@ -56,5 +84,12 @@ struct Solution {
     /// - Tip: Use exactMatches and check if all values are `true`
     func isWinningGuess(guess: [Character], answer: [Character]) -> Bool {
         // TODO: Check if the player has guessed all characters correctly
+        let exacts = exactMatches(guess: guess, answer: answer)
+        for x in exacts {
+            if x != true {
+                return false
+            }
+        }
+        return true
     }
 }
