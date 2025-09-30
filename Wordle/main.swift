@@ -1,6 +1,6 @@
 import Foundation
 
-let ANSWER = Array("ABCDE")
+let ANSWER = Array("STAIR")
 let solution = Solution()
 
 func getGuess() -> [Character] {

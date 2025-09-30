@@ -1,8 +1,8 @@
 import Foundation
 
-let DONE_EXTENSION_1 = false
-let DONE_EXTENSION_2 = false
-let DONE_EXTENSION_3 = false
+let DONE_EXTENSION_1 = true
+let DONE_EXTENSION_2 = true
+let DONE_EXTENSION_3 = true
 
 struct Extension {
 
@@ -14,7 +14,11 @@ struct Extension {
     ///
     /// Set `DONE_EXTENSION_1` to `true` when complete!
     func loadWords(filePath: URL) -> [String] {
-      return [] // DELETE THIS
+        var allWords = [String]()
+        if let startWords = try? String(contentsOf: filePath) {
+            allWords = startWords.components(separatedBy: "\n")
+        }
+        return allWords
     }
 
     /// 🥈 Generate a filename string for a log file
@@ -24,7 +28,10 @@ struct Extension {
     ///
     /// Set `DONE_EXTENSION_2` to `true` when complete!
     func logFileName() -> String {
-        return "" // DELETE THIS
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyymmdd-HHmmss"
+        let formattedDate = dateFormatter.string(from: Date()) + ".log"
+        return formattedDate
     }
 
     /// 🥉 Save a log string to a file at the given path
@@ -34,6 +41,11 @@ struct Extension {
     ///
     /// Set `DONE_EXTENSION_3` to `true` when complete!
     func saveLog(log: String, logPath: URL) -> Bool {
-        return false // DELETE THIS
+        do {
+            try log.write(to: logPath, atomically: true, encoding: String.Encoding.utf8)
+        } catch {
+            return false
+        }
+        return true
     }
 }
